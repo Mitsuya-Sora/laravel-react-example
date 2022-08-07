@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +28,15 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('/blogs', BlogController::class)
+    ->names(['index'=>'blog.index',
+            'create' => 'blog.create',
+            'store' => 'blog.store',
+            'destroy' => 'blog.destroy',
+            'edit' => 'blog.edit',
+            'update' => 'blog.update'
+            ])
+    ->middleware(['auth']);
 
 require __DIR__.'/auth.php';
